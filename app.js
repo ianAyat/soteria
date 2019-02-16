@@ -7,7 +7,7 @@ var routes = require("./routes");
 
 var app = express()
 
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 8080);
 app.set("views", path.resolve(__dirname, "views"));
 app.set("view engine", "ejs");
 
