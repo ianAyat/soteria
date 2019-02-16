@@ -7,7 +7,11 @@ var routes = require("./routes");
 
 var app = express()
 
-app.set("port", process.env.PORT || 8080);
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+// var mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL;
+// var mongoURLLabel = "";
+
 app.set("views", path.resolve(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -20,6 +24,5 @@ app.use(express.static(staticPath));
 
 app.use(routes);
 
-app.listen(app.get("port"), function(){
-    console.log("Server started at port: " + app.get("port"))
-});
+app.listen(port, ip);
+console.log('Server running on http://%s:%s', ip, port);
