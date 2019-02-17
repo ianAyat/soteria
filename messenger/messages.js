@@ -15,7 +15,7 @@ var FACEBOOK_ACCESS_TOKEN = "EAAcoHLg5gKIBALlTnIKMSr2LKrkgV8H4okZAK9iZCZCkOTu0JB
 
 var sendTextMessage = (recipientId, text)=>{
     request({
-        url:'https://graph.facebook.com/v2.6/me/messages?access_token=' + FACEBOOK_ACCESS_TOKEN,
+        url:"https://graph.facebook.com/v2.6/me/messages?access_token=" + FACEBOOK_ACCESS_TOKEN,
         // qs:{access_token: FACEBOOK_ACCESS_TOKEN },
         method: 'POST',
         json:{
