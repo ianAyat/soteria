@@ -13,6 +13,10 @@ router.get('/messenger', verification)
 
 router.post('/messenger', message)
 
+router.get('/privacy_policy', function(req,res){
+    res.send("Privacy Policy")
+})
+
 router.use(function(req,res){
     res.status(404);
     res.send("Page Not Found!");
