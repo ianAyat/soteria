@@ -116,9 +116,9 @@ router.get('/messenger', verification)
 
 router.post('/messenger', function(req,res){
   var col = db.collection('messages')
-  if(req.body){
-    // col.insert({date:Date.now(), message: ""+ db.count})
-  }
+  // if(req.body){
+    col.insert({date:Date.now(), message: "messenger post end point triggered."})
+  // }
   message(req, res)
 })
 
