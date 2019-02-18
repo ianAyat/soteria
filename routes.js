@@ -144,7 +144,7 @@ router.post('/webhook', function(req,res){
       }
     })
     // return a '200 OK' response to all events
-    res.status(200).send('EVENT_RECEIVED')
+    res.sendStatus(200)
   }
   else{
     // return a '404 Not Found' if event is not from a page subscription
