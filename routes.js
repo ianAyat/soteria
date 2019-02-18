@@ -114,10 +114,23 @@ router.get('/pagecount', function (req, res) {
 
 router.get('/messenger', verification)
 
-router.post('/messenger', message)
+router.post('/messenger', function(req,res){
+  var col = db.collection('messages')
+  if(req.body){
+    col.insert({date:Date.now(), message: req.body})
+  }
+  message(req, res)
+})
+
+router.get('/messages', function(req,res){
+  var col = db.collection('messages')
+  var result = col.find()
+  res.send({messages: result})
+  // res.render('messages')
+})
 
 router.get('/privacy_policy', function(req,res){
-    res.send("Privacy Policy")
+  res.render('privacy_policy')
 })
 
 router.use(function(req,res){
