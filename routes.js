@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 
 var verification = require('./messenger/verification')
 var message = require('./messenger/messages')
@@ -120,11 +121,56 @@ router.get('/messenger', function(req,res){
 
 router.post('/messenger', function(req,res){
   var col = db.collection('messages')
-  // if(req.body){
-    col.insert({date:Date.now(), message: "messenger POST end point triggered."})
-  // }
-  message(req, res)
+  col.insert({date:Date.now(), message: "messenger POST end point triggered."})
+  // Parse the request body from the POST
+  let body = req.body
+
+  // check the webhook event is from a page subscription
+  if(body.object === 'page'){
+    body.entry.forEach(function(entry){
+      // gets the body of the webhook event
+      let webhook_event = entry.messaging[0]
+      console.log(webhook_event)
+      // get the sender PSID
+      let sender_psid = webhook_event.sender.id
+      console.log("sender id: " + sender_psid)
+
+      // check if the event is a message or postback and pass the event to the appropriate handler function
+      if(webhook_event.message){
+        processMessage(sender_psid, webhook_event.message)
+      }
+      else if(webhook_event.postback){
+        processPostback(sender_psid, webhook_event.postback)
+      }
+    })
+    // return a '200 OK' response to all events
+    res.status(200).send('EVENT_RECEIVED')
+  }
+  else{
+    // return a '404 Not Found' if event is not from a page subscription
+    res.sendStatus(404)
+  }
 })
+
+var processMessage = (senderId, message) => {
+  let text = message.text
+  sendTextMessage(senderId, text)
+}
+
+var processPostback = (senderId, postback) => {}
+
+var sendTextMessage = (recipientId, text)=>{
+  request({
+      url:'https://graph.facebook.com/v2.6/me/messages',
+      qs:{'access_token': FACEBOOK_ACCESS_TOKEN },
+      method: 'POST',
+      json:{
+          // "messaging_type": "MESSAGE_TAG",
+          recipient: { id:recipientId },
+          message: { text: text }
+      }
+  })
+}
 
 router.get('/messages', function(req,res){
   var col = db.collection('messages')
