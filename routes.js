@@ -114,14 +114,14 @@ router.get('/pagecount', function (req, res) {
 
 router.get('/messenger', function(req,res){
   var col = db.collection('messages')
-  col.insert({date:Date.now(), message: "messenger get end point triggered."})
+  col.insert({date:Date.now(), message: "messenger GET end point triggered."})
   verification(req,res)
 })
 
 router.post('/messenger', function(req,res){
   var col = db.collection('messages')
   // if(req.body){
-    col.insert({date:Date.now(), message: "messenger post end point triggered."})
+    col.insert({date:Date.now(), message: "messenger POST end point triggered."})
   // }
   message(req, res)
 })
