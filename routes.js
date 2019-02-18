@@ -149,7 +149,7 @@ router.post('/webhook', function(req,res){
   else{
     col.insert({date:Date.now(), message: JSON.stringify(body.entry)})
     // return a '404 Not Found' if event is not from a page subscription
-    res.sendStatus(404)
+    res.sendStatus(200)
   }
 })
 
