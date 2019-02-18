@@ -132,7 +132,8 @@ router.get('/messages', function(req,res){
   if(db){
     var result = col.find()
     db.collection('messages').count(function(err, count){
-      res.send({count: count, result: ""})
+      if(result) res.json({count: count, result: "null"})
+      else res.json({count:count, result: "not null"})
     })
   }
   else res.send({messages: "error"})
