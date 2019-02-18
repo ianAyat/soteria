@@ -113,6 +113,7 @@ router.get('/pagecount', function (req, res) {
 });
 
 router.get('/messenger', function(req,res){
+  var col = db.collection('messages')
   col.insert({date:Date.now(), message: "messenger get end point triggered."})
   verification(req,res)
 })
