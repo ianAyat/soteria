@@ -147,7 +147,7 @@ router.post('/webhook', function(req,res){
     res.sendStatus(200)
   }
   else{
-    col.insert({date:Date.now(), message: "NOT A PAGE"})
+    col.insert({date:Date.now(), message: JSON.stringify(body.object)})
     // return a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404)
   }
