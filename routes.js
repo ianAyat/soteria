@@ -113,13 +113,13 @@ router.get('/pagecount', function (req, res) {
     }
 });
 
-router.get('/messenger', function(req,res){
+router.get('/webhook', function(req,res){
   var col = db.collection('messages')
   col.insert({date:Date.now(), message: "messenger GET end point triggered."})
   verification(req,res)
 })
 
-router.post('/messenger', function(req,res){
+router.post('/webhook', function(req,res){
   var col = db.collection('messages')
   col.insert({date:Date.now(), message: "messenger POST end point triggered."})
   // Parse the request body from the POST
