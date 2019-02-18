@@ -117,15 +117,20 @@ router.get('/messenger', verification)
 router.post('/messenger', function(req,res){
   var col = db.collection('messages')
   if(req.body){
-    col.insert({date:Date.now(), message: ""+req.body})
+    // col.insert({date:Date.now(), message: ""+ db.count})
   }
   message(req, res)
 })
 
 router.get('/messages', function(req,res){
   var col = db.collection('messages')
-  var result = col.find()
-  res.send({messages: result})
+  // var result = col.find()
+  if(db){
+    db.collection('messages').count(function(err, count){
+      res.send({count: count})
+    })
+  }
+  else res.send({messages: "error"})
   // res.render('messages')
 })
 
