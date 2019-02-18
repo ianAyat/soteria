@@ -159,6 +159,8 @@ var processMessage = (senderId, message) => {
 
 var processPostback = (senderId, postback) => {}
 
+var FACEBOOK_ACCESS_TOKEN = "EAAFKFFt5q2QBAL3qu8YYFpJhLpXE1sjEd0vq7PHJRvZAUAJlowYNO1fNenOozLaNxbtfLeeh9DWqnEy5W5bC6LRLZAUMgPduYfaNWpnDk2oA5lSlkp0MLT6LZAX9TYLD8eIw6eDdK1jO1s62BKHSTEBUxYAkZB6f1wCRzQCqvAZDZD"
+
 var sendTextMessage = (recipientId, text)=>{
   request({
       url:'https://graph.facebook.com/v2.6/me/messages',
