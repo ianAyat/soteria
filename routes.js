@@ -125,7 +125,7 @@ router.post('/webhook', function(req,res){
   let body = req.body;
 
   // check the webhook event is from a page subscription
-  if(body.entry){
+  if(body.object === "page"){
     col.insert({date:Date.now(), message: "PAGE"})
     body.entry.forEach(function(entry){
       // gets the body of the webhook event
@@ -144,7 +144,7 @@ router.post('/webhook', function(req,res){
       }
     })
     // return a '200 OK' response to all events
-    res.sendStatus(200)
+    res.status(200).send('EVENT_RECEIVED');
   }
   else{
     col.insert({date:Date.now(), message: JSON.stringify(body.entry)})
