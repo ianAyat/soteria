@@ -16,7 +16,8 @@ app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 
-app.use(bodyParser.urlencoded({extended:false}));
+// app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json())
 
 var staticPath = path.join(__dirname, "public");
 app.use(express.static(staticPath));
