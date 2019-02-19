@@ -120,13 +120,11 @@ router.get('/webhook', function(req,res){
 })
 
 router.post('/webhook', function(req,res){
-  var col = db.collection('messages')
   // Parse the request body from the POST
   let body = req.body;
 
   // check the webhook event is from a page subscription
   if(body.object === "page"){
-    col.insert({date:Date.now(), message: "PAGE"})
     body.entry.forEach(function(entry){
       // gets the body of the webhook event
       let webhook_event = entry.messaging[0]
@@ -147,7 +145,6 @@ router.post('/webhook', function(req,res){
     res.status(200).send('EVENT_RECEIVED');
   }
   else{
-    col.insert({date:Date.now(), message: JSON.stringify(body.entry)})
     // return a '404 Not Found' if event is not from a page subscription
     res.sendStatus(200)
   }
