@@ -150,9 +150,47 @@ router.post('/webhook', function(req,res){
   }
 })
 
+var spacer = ';'
+var keyword = 'soteria'
+
 var processMessage = (senderId, message) => {
   let text = message.text
-  sendTextMessage(senderId, text)
+  //keyword; name; address; office; position
+  // e.g. soteria; juan pedro; session road, baguio city; LGU; barangay kagawad
+  text = text.trim()
+  // A USER IS TRYING TO REGISTER WITH THE CORRECT POSITION OF THE KEYWORD
+  if(text.indexOf(keyword) == 0){
+    var details = Array()
+    var startIndex = keyword.length;
+    var endIndex = 0;
+    while(startIndex > -1 && endIndex > -1){
+      endIndex = text.indexOf(startIndex + 1, spacer)
+      if(endIndex > -1 && (endIndex - startIndex) > 5){
+        var data = text.substring(startIndex, endIndex)
+        data = data.trim()
+        startIndex = endIndex;
+        details.push(data)
+      }
+      else break;
+      if(details.length > 4) break
+    }
+
+    if(details.length == 4){
+      sendTextMessage(senderId, "name: '" + details[0] + "'\naddress: '" + details[1] + "'\n"
+        + "office: '" + details[2] + "'\nposition: '" + details[3] + "'")
+    }
+    else registrationFailed(senderId)
+  }
+  // A USER SEEMS TRYING TO REGISTER BUT THE POSITION OF THE KEYWORD IS NOT CORRECT
+  else if(message.indexOf(keyword) > 0){
+    registrationFailed(senderId)
+  }
+  // A USER SENDS A MESSAGE TO THE PAGE
+  else{
+    sendTextMessage(senderId, "Hi! This is an automated response.\nIf your registered to this page, notification/messages will be automatically sent to you if an incident is detected.\n"
+      + " If your not registered, you can register by sending your registration information to this page with the following format,\nsoteria;<name>;<address>;<office>;<position>")
+  }
+  // sendTextMessage(senderId, text)
 }
 
 var processPostback = (senderId, postback) => {}
@@ -165,11 +203,14 @@ var sendTextMessage = (recipientId, text)=>{
       qs:{'access_token': FACEBOOK_ACCESS_TOKEN },
       method: 'POST',
       json:{
-          // "messaging_type": "MESSAGE_TAG",
           recipient: { id:recipientId },
           message: { text: text }
       }
   })
+}
+
+var registrationFailed = (senderId) => {
+  sendTextMessage(senderId, "Registration Failed.\nTo register follow the format,\nsoteria;<name>;<address>;<office>;<position>")
 }
 
 router.get('/messages', function(req,res){
