@@ -160,7 +160,7 @@ var processMessage = (senderId, message) => {
   text = text.trim()
   // A USER IS TRYING TO REGISTER WITH THE CORRECT POSITION OF THE KEYWORD
   if(text.indexOf(keyword) == 0){
-    var details = text.split(';');
+    var details = text.split(spacer);
 
     if(details.length == 5){
       sendTextMessage(senderId, "name: '" + details[1] + "'\naddress: '" + details[2] + "'\n"
