@@ -162,9 +162,9 @@ var processMessage = (senderId, message) => {
   if(text.indexOf(keyword) == 0){
     var details = text.split(';');
 
-    if(details.length == 4){
-      sendTextMessage(senderId, "name: '" + details[0] + "'\naddress: '" + details[1] + "'\n"
-        + "office: '" + details[2] + "'\nposition: '" + details[3] + "'")
+    if(details.length == 5){
+      sendTextMessage(senderId, "name: '" + details[1] + "'\naddress: '" + details[2] + "'\n"
+        + "office: '" + details[3] + "'\nposition: '" + details[4] + "'")
     }
     else registrationFailed(senderId)
   }
