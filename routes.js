@@ -165,7 +165,7 @@ var processMessage = (senderId, message) => {
     var endIndex = 0;
     while(startIndex > -1 && endIndex > -1){
       endIndex = text.indexOf(startIndex + 1, spacer)
-      if(endIndex > -1 && (endIndex - startIndex) > 5){
+      if(endIndex > -1 && (endIndex - startIndex) >= 3){
         var data = text.substring(startIndex, endIndex)
         data = data.trim()
         startIndex = endIndex;
