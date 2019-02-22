@@ -160,20 +160,7 @@ var processMessage = (senderId, message) => {
   text = text.trim()
   // A USER IS TRYING TO REGISTER WITH THE CORRECT POSITION OF THE KEYWORD
   if(text.indexOf(keyword) == 0){
-    var details = Array()
-    var startIndex = keyword.length;
-    var endIndex = 0;
-    while(startIndex > -1 && endIndex > -1){
-      endIndex = text.indexOf(startIndex + 1, spacer)
-      if(endIndex > -1 && (endIndex - startIndex) >= 3){
-        var data = text.substring(startIndex, endIndex)
-        data = data.trim()
-        startIndex = endIndex;
-        details.push(data)
-      }
-      else break;
-      if(details.length > 4) break
-    }
+    var details = text.split(';');
 
     if(details.length == 4){
       sendTextMessage(senderId, "name: '" + details[0] + "'\naddress: '" + details[1] + "'\n"
