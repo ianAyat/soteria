@@ -182,7 +182,7 @@ var processMessage = (senderId, message) => {
     else registrationFailed(senderId)
   }
   // A USER SEEMS TRYING TO REGISTER BUT THE POSITION OF THE KEYWORD IS NOT CORRECT
-  else if(message.indexOf(keyword) > 0){
+  else if(text.indexOf(keyword) > 0){
     registrationFailed(senderId)
   }
   // A USER SENDS A MESSAGE TO THE PAGE
