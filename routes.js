@@ -166,7 +166,7 @@ var processMessage = (senderId, message) => {
       details[0] = senderId
       for(var i=1;i<details.length;i++)
         details[i] = details[i].trim()
-      db.collection("recipients").find({fb_id: details[0]}).toArray((err,result)=>{
+      db.collection("recipients").find({sender_id: details[0]}).toArray((err,result)=>{
         if(err) return sendTextMessage(senderId, "Registration Error.")
         if(result.length > 0){
           return sendTextMessage(senderId, "registration found.")
