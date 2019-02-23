@@ -163,8 +163,25 @@ var processMessage = (senderId, message) => {
     var details = text.split(spacer);
 
     if(details.length == 5){
-      sendTextMessage(senderId, "name: '" + details[1] + "'\naddress: '" + details[2] + "'\n"
-        + "office: '" + details[3] + "'\nposition: '" + details[4] + "'")
+      details[0] = senderId
+      for(var i=1;i<details.length;i++)
+        details[i] = details[i].trim()
+      db.collection("recipients").find({fb_id: details[0]}).toArray((err,result)=>{
+        if(err) return sendTextMessage(senderId, "Registration Error.")
+        if(result.length > 0){
+          return sendTextMessage(senderId, "registration found.")
+        }
+        else{
+          db.collection("recipients").insert({
+            sender_id: details[0],
+            name: details[1],
+            address: details[2],
+            office: details[3],
+            position: details[4]
+          })
+          return sendTextMessage(senderId, "registration saved.")
+        }
+      })
     }
     else registrationFailed(senderId)
   }
