@@ -175,6 +175,7 @@ var processMessage = (senderId, message) => {
             return sendTextMessage(senderId, "Your are already registered as a recipient.")
           else if(result[0].status === "denied")
             return sendTextMessage(senderId, "Your previous application has been denied.")
+          else return sendTextMessage(senderId, "Unhandled situation.")
         }
         else{
           db.collection("recipients").insert({
@@ -249,7 +250,7 @@ router.get('/privacy_policy', function(req,res){
 router.get('/reset', (req,res)=>{
   db.collection("recipients").drop(function(err){
     if(err) return res.json({successful: false, err: err})
-    else return res.json({successful: false})
+    else return res.json({successful: true})
   })
 })
 
