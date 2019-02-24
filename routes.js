@@ -169,7 +169,12 @@ var processMessage = (senderId, message) => {
       db.collection("recipients").find({sender_id: details[0]}).toArray((err,result)=>{
         if(err) return sendTextMessage(senderId, "Registration Error.")
         if(result.length > 0){
-          return sendTextMessage(senderId, "registration found.")
+          if(result[0].status === "pending")
+            return sendTextMessage(senderId, "Your previous application is waiting for approval.")
+          else if(result[0].status === "approved")
+            return sendTextMessage(senderId, "Your are already registered as a recipient.")
+          else if(result[0].status === "denied")
+            return sendTextMessage(senderId, "Your previous application has been denied.")
         }
         else{
           db.collection("recipients").insert({
@@ -177,9 +182,10 @@ var processMessage = (senderId, message) => {
             name: details[1],
             address: details[2],
             office: details[3],
-            position: details[4]
+            position: details[4],
+            status: "pending"
           })
-          return sendTextMessage(senderId, "registration saved.")
+          return sendTextMessage(senderId, "Your application has been saved and is waiting for approval.")
         }
       })
     }
@@ -238,6 +244,13 @@ router.get('/messages', function(req,res){
 
 router.get('/privacy_policy', function(req,res){
   res.render('privacy_policy')
+})
+
+router.get('/reset', (req,res)=>{
+  db.collection("recipients").drop(function(err){
+    if(err) return res.json({successful: false, err: err})
+    else return res.json({successful: false})
+  })
 })
 
 router.use(function(req,res){
