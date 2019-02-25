@@ -16,8 +16,8 @@ app.set("view engine", "ejs");
 
 app.use(logger("dev"));
 
-// app.use(bodyParser.urlencoded({extended:false}));
-// facebook messenger sends a post message of json format, not the common one
+app.use(bodyParser.urlencoded({extended:true}))
+// used by facebook messenger
 app.use(bodyParser.json())
 
 var staticPath = path.join(__dirname, "public");

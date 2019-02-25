@@ -169,13 +169,7 @@ var processMessage = (senderId, message) => {
       db.collection("recipients").find({sender_id: details[0]}).toArray((err,result)=>{
         if(err) return sendTextMessage(senderId, "Registration Error.")
         if(result.length > 0){
-          if(result[0].status === "pending")
-            return sendTextMessage(senderId, "Your previous application is waiting for approval.")
-          else if(result[0].status === "approved")
-            return sendTextMessage(senderId, "Your are already registered as a recipient.")
-          else if(result[0].status === "denied")
-            return sendTextMessage(senderId, "Your previous application has been denied.")
-          else return sendTextMessage(senderId, "Unhandled situation.")
+          sendTextMessage(senderId, "Your previous registration has already been saved.")
         }
         else{
           db.collection("recipients").insert({
@@ -183,10 +177,9 @@ var processMessage = (senderId, message) => {
             name: details[1],
             address: details[2],
             office: details[3],
-            position: details[4],
-            status: "pending"
+            position: details[4]
           })
-          return sendTextMessage(senderId, "Your application has been saved and is waiting for approval.")
+          return sendTextMessage(senderId, "Your registration has been saved.")
         }
       })
     }
@@ -223,6 +216,32 @@ var sendTextMessage = (recipientId, text)=>{
 var registrationFailed = (senderId) => {
   sendTextMessage(senderId, "Registration Failed.\nTo register follow the format,\nsoteria;<name>;<address>;<office>;<position>")
 }
+
+router.post('/recipients/:keyword', (req,res)=>{
+  var keyword = req.params.keyword
+  if(keyword.length == null || keyword.length == 0){
+    db.collection("recipients").find({}).toArray((err,recipients)=>{
+      if(err) return res.json({successful:false, result:err})
+      return res.json({successful:true, result:recipients})
+    })
+  }
+  else{
+    db.collection("recipients").find({name: new RegExp(keyword, 'i')}).toArray((err,result)=>{
+      if(err) return res.json({successful:false, result:err})
+      return res.json({successful:true, result:recipients})
+    })
+  }
+})
+
+router.post('/notify/:id/:message', (req,res)=>{
+  var recipientId = req.params.id;
+  var message = req.params.message
+  if(recipientId && message){
+    sendTextMessage(recipientId, message)
+    res.json({successful:true})
+  }
+  else res.json({successful:false})
+})
 
 router.get('/messages', function(req,res){
   var col = db.collection('messages')
