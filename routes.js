@@ -239,12 +239,12 @@ router.post('/notify', (req,res)=>{
   // var message = req.params.message
   var recipientId = req.body.id
   var message = req.body.message
-  res.json({id:recipientId, message:message})
-  // if(recipientId && message){
-  //   sendTextMessage(recipientId, message)
-  //   res.json({successful:true})
-  // }
-  // else res.json({successful:false})
+  // res.json({id:recipientId, message:message})
+  if(recipientId && message){
+    sendTextMessage(recipientId, message)
+    res.json({successful:true})
+  }
+  else res.json({successful:false})
 })
 
 router.get('/messages', function(req,res){
