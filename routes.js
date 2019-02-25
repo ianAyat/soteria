@@ -234,14 +234,17 @@ router.post('/recipients/:keyword', (req,res)=>{
   // }
 })
 
-router.post('/notify/:id/:message', (req,res)=>{
-  var recipientId = req.params.id;
-  var message = req.params.message
-  if(recipientId && message){
-    sendTextMessage(recipientId, message)
-    res.json({successful:true})
-  }
-  else res.json({successful:false})
+router.post('/notify', (req,res)=>{
+  // var recipientId = req.params.id;
+  // var message = req.params.message
+  var recipientId = req.body.id
+  var message = req.body.message
+  res.json({id:recipientId, message:message})
+  // if(recipientId && message){
+  //   sendTextMessage(recipientId, message)
+  //   res.json({successful:true})
+  // }
+  // else res.json({successful:false})
 })
 
 router.get('/messages', function(req,res){
