@@ -221,16 +221,16 @@ router.post('/recipients/:keyword', (req,res)=>{
   var keyword = req.params.keyword.trim()
   // return res.json({keyword: keyword})
   // if(keyword.length == 0){
-  //   db.collection("recipients").find({}).toArray((err,recipients)=>{
-  //     if(err) return res.json({successful:false, result:err})
-  //     return res.json({successful:true, result:recipients})
-  //   })
-  // }
-  // else{
-    db.collection("recipients").find({name: {$regex: /ryan$/}}).toArray((err,result)=>{
+    db.collection("recipients").find({}).toArray((err,recipients)=>{
       if(err) return res.json({successful:false, result:err})
       return res.json({successful:true, result:recipients})
     })
+  // }
+  // else{
+    // db.collection("recipients").find({name: {$regex: /ryan$/}}).toArray((err,result)=>{
+    //   if(err) return res.json({successful:false, result:err})
+    //   return res.json({successful:true, result:recipients})
+    // })
   // }
 })
 
