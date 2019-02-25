@@ -227,7 +227,7 @@ router.post('/recipients/:keyword', (req,res)=>{
     })
   }
   else{
-    db.collection("recipients").find({"name": new RegExp(keyword, 'i')}).toArray((err,result)=>{
+    db.collection("recipients").find({name: {$regex: /ryan/}}).toArray((err,result)=>{
       if(err) return res.json({successful:false, result:err})
       return res.json({successful:true, result:recipients})
     })
