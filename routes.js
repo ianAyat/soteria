@@ -217,8 +217,9 @@ var registrationFailed = (senderId) => {
   sendTextMessage(senderId, "Registration Failed.\nTo register follow the format,\nsoteria;<name>;<address>;<office>;<position>")
 }
 
-router.post('/recipients/:keyword', (req,res)=>{
-  var keyword = req.params.keyword.trim()
+router.post('/recipients', (req,res)=>{
+  // var keyword = req.params.keyword.trim()
+  var keyword = req.body.query
   // return res.json({keyword: keyword})
   // if(keyword.length == 0){
     db.collection("recipients").find({}).toArray((err,recipients)=>{
