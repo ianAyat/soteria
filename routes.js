@@ -199,7 +199,7 @@ var processMessage = (senderId, message) => {
 
 var processPostback = (senderId, postback) => {}
 
-var FACEBOOK_ACCESS_TOKEN = "EAAFKFFt5q2QBAL3qu8YYFpJhLpXE1sjEd0vq7PHJRvZAUAJlowYNO1fNenOozLaNxbtfLeeh9DWqnEy5W5bC6LRLZAUMgPduYfaNWpnDk2oA5lSlkp0MLT6LZAX9TYLD8eIw6eDdK1jO1s62BKHSTEBUxYAkZB6f1wCRzQCqvAZDZD"
+var FACEBOOK_ACCESS_TOKEN = "EAAGiJymQ53gBAD91SWBNt7EuepZAqmZASQ617UyjHZAhrngdLgzCtqoIB9yNxU7GGHEmhnnTUNEUUxX5Ed2OXLWqGPNHRN2IwlPgQ350R4I81YZBwxZCKbGfPJyPiPwB66jMnxZBy7vSH85IMwtnewMZCzGPnflS4JITIWp1WcZClQZDZD"
 
 var sendTextMessage = (recipientId, text)=>{
   request({
